@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Making Memories</title>
+</head>
+<style>
+    @font-face {font-family: Vollkorn;src: url('VollkornSC-Regular.ttf');}
+       body{
+        background-color: black;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .wrapper{
+        display: flex;
+        flex-flow: row;
+        height: 980px;
+    }
+    #memories{
+        font-size: 150px;
+        font-family: Vollkorn;
+        text-align: center;
+        color: white;
+        -webkit-text-stroke-width: 3px;
+        -webkit-text-stroke-color: black;
+    }
+    #cube{
+        size: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    .flex-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        background-color: black;
+        padding: 0%;
+    }
+    .inventory{
+        border: none;
+        background: none;
+        height: 110px;
+        background-image: url('inv.png');
+        background-repeat: no-repeat ;
+        background-size: cover;
+        padding-right: 10px;
+    }
+    .main{
+        padding-top: 60px;
+        background-image: url('view2.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: black;
+        width: 100%;
+    }
+</style>
+<body>
+   <div class="wrapper">
+    <article class="main">
+    <img id="cube" src="Cube2.png" onclick="addMemory()">
+    <h1 id="memories">Memories: 0</h1>
+    </article>
+    <aside class="flex-container">
+        <button onclick="buySoul()" class="inventory" id="soul">Corrupted Soul: 0 <br> Cost: 50</button>
+        <button onclick="buyTree()" class="inventory" id="tree">Tree: 0 <br> Cost: 1000</button>
+        <button onclick="buyExtractor()" class="inventory" id="extractor">Extractor: 0 <br> Cost: 10000</button>
+        <button onclick="buyHouse()" class="inventory" id="house">House: 0 <br> Cost: 100000</button>
+        <button onclick="buyHotel()" class="inventory" id="hotel">Hotel: 0 <br> Cost: 500000</button>
+        <button onclick="buyLake()" class="inventory" id="lake">Lake: 0 <br> Cost: 1000000</button>
+    </aside>
+    </div>
+    <script>
+        let memories = 0
+        const soul = [0,1,50]; // the amount owned, produced and price of Corrupted Souls
+        const tree = [0,5,1000]; // the amount owned, produced and price of a Tree
+        const extractor = [0,50,10000] ; // the amount owned, produced and price of a extractor
+        const house = [0,100,100000] ; // the amount owned, produced and price of a house
+        const hotel = [0,500,500000] ; // the amount owned, produced and price of a hotel
+        const lake = [0,1000,1000000] ; // the amount owned, produced and price of a lake
+        let tax = 25; // the % a building gets more expensive when purchased 
+
+        function checkMemory(){
+            memories = memories + ((soul[1] * soul[0])*0.5);
+            memories = memories + ((tree[1] * tree[0])*0.5);
+            memories = memories + ((extractor[1] * extractor[0])*0.5);
+            memories = memories + ((house[1] * house[0])*0.5);
+            memories = memories + ((hotel[1] * hotel[0])*0.5);
+            memories = memories + ((lake[1] * lake[0])*0.5);
+            // Prints total amount of memories to the website
+            document.getElementById("memories").innerHTML = "Memories: "+parseInt(memories);
+        }
+
+        setInterval(checkMemory, 500); //triggers the check memory function every half second
+
+        function addMemory(){
+            memories++;
+            document.getElementById("memories").innerHTML = "Memories: "+parseInt(memories);
+        }
+
+        function buySoul(){
+            // looks to see if a soul can be purchased
+            if(memories >= soul[2]){
+	            //reduces the cost of the soul from the total amount of memories
+	            memories = memories - soul[2];
+	            //reduces 
+	            soul[2] = parseInt(soul[2] + (soul[2]/100*tax));
+	            soul[0]++;
+	            document.getElementById("soul").innerHTML = "Corrupted Soul: "+soul[0]+"<br> cost: "+soul[2];
+            }
+            else{
+	            alert("You do not have enough memories to purchase this");
+            }
+        }     
+        function buyTree(){
+            // looks to see if a tree can be purchased
+            if(memories >= tree[2]){
+	            //reduces the cost of the tree from the total amount of memories
+	            memories = memories - tree[2];
+	            //increases the price for a new object
+	            tree[2] = parseInt(tree[2] + (tree[2]/100*tax));
+	            //increases amount owned
+	            tree[0]++;
+	            document.getElementById("tree").innerHTML = "Tree: "+tree[0]+"<br> cost: "+tree[2];
+            }
+            else{
+	            alert("You do not have enough memories to purchase this");
+            }
+        }
+        function buyExtractor(){
+           // looks to see if a extractor can be purchased
+           if(memories >= extractor[2]){
+	            //reduces the cost of the extractor from the total amount of memories
+	            memories = memories - extractor[2];
+	            //increases the price for a new object
+	            extractor[2] = parseInt(extractor[2] + (extractor[2]/100*tax));
+	            //increases amount owned
+	            extractor[0]++;
+	            document.getElementById("extractor").innerHTML = "Extractor: "+extractor[0]+"<br> cost: "+extractor[2];
+            }
+            else{
+	            alert("You do not have enough memories to purchase this");
+            } 
+        }
+        function buyHouse(){
+            // looks to see if a house can be purchased
+            if(memories >= house[2]){
+	            //reduces the cost of the house from the total amount of memories
+	            memories = memories - house[2];
+	            //increases the price for a new object
+	            house[2] = parseInt(house[2] + (house[2]/100*tax));
+	            //increases amount owned
+	            house[0]++;
+	            document.getElementById("house").innerHTML = "House: "+house[0]+"<br> cost: "+house[2];
+            }
+            else{
+	            alert("You do not have enough memories to purchase this");
+            }     
+        }
+        function buyHotel(){
+            // looks to see if a hotel can be purchased
+            if(memories >= hotel[2]){
+	            //reduces the cost of the hotel from the total amount of memories
+	            memories = memories - hotel[2];
+	            //increases the price for a new object
+	            hotel[2] = parseInt(hotel[2] + (hotel[2]/100*tax));
+	            //increases amount owned
+	            hotel[0]++;
+	            document.getElementById("hotel").innerHTML = "Hotel: "+hotel[0]+"<br> cost: "+hotel[2];
+            }
+            else{
+	            alert("You do not have enough memories to purchase this");
+            }         
+        }
+        function buyLake(){
+            // looks to see if a lake can be purchased
+            if(memories >= lake[2]){
+	            //reduces the cost of the lake from the total amount of memories
+	            memories = memories - lake[2];
+	            //increases the price for a new object
+	            lake[2] = parseInt(lake[2] + (lake[2]/100*tax));
+	            //increases amount owned
+	            lake[0]++;
+	            document.getElementById("lake").innerHTML = "Lake: "+lake[0]+"<br> cost: "+lake[2];
+            }
+            else{
+	            alert("You do not have enough memories to purchase this");
+            }            
+        }
+    </script> 
+    
+
+
+
+</body>
+</html>
